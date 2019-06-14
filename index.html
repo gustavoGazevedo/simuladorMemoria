@@ -1,0 +1,121 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Trabalho de Sistemas Operacionais</title>
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+    integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+  <div class="header">
+    <h2>Trabalho de Sistemas Operacionais</h2>
+    <h3>Gustavo Azevedo</h3>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="gramar col-6">
+        <div class="form-group">
+          <label for="exampleFormControlFile1">Input de Arquivo</label>
+          <input type="file" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+        <!-- first-fit, best-fit e worst-fit -->
+        <div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="algoritmo" id="ff" value="option1" checked>
+            <label class="form-check-label" for="ff">
+              First-Fit
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="algoritmo" id="bf" value="option2">
+            <label class="form-check-label" for="bf">
+              Best-Fit
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="algoritmo" id="wf" value="option3">
+            <label class="form-check-label" for="wf">
+              Worst-Fit
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <p class id="gramVizual">
+          <a data-toggle="tooltip" data-placement="top" title="Gramática">G</a>
+          = ({<var data-toggle="tooltip" data-placement="top" title="Não-terminais" id="n1">N</var>}, {<var
+            data-toggle="tooltip" data-placement="top" title="Terminais" id="t1">T</var>},
+          <a data-toggle="tooltip" data-placement="top" title="Produção">P</a>,
+          <var data-toggle="tooltip" data-placement="top" title="Símbolo inicial" id="s1">S</var>) <br />
+          <a data-toggle="tooltip" data-placement="left" title="Produção">P = { <br />
+            <var id="p1"></var><br />
+            }
+          </a>
+        </p>
+        <div class="row">
+          <div onclick="runProgram()" class="col-3">
+            <button type="button" class="btn btn-default">Acionar</button>
+          </div>
+          <div class="col-9">
+            <span id="typeGram" class="col-3">Tipo de Gramática</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script>
+      $('#tabela').hide();
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+
+      function testTer(event) {
+        let value = String.fromCharCode(event.which);
+        let pattern = new RegExp(/[a-z]/i);
+        return pattern.test(value);
+      }
+
+      function testSI() {
+        let prod = $('#prod').val();
+        prod = prod.replace(/ /g, '');
+        let linhas = prod.split('\n');
+        let esquerda = ``;
+        for (const key of linhas) {
+          let aux = key.split('>');
+          esquerda = esquerda + `<a class="dropdown-item" onclick="setSI(this.innerHTML)" href="#">${aux[0]}</a>`
+        }
+        $('.dropdown-menu').html(esquerda);
+      }
+
+      function testProd(event) {
+        let value = String.fromCharCode(event.which);
+        let aux = $('#nter').val() + $('#ter').val();
+        if (aux.includes(value) || !/[a-z]/gi.test(value)) {
+          return value;
+        } else {
+          alert('Não está dentro dos não-terminais ou dos terminais');
+          event.preventDefault();
+        }
+      }
+      $('#nter').bind('keypress', testTer);
+      $('#ter').bind('keypress', testTer);
+      $('#si').bind('keypress', testTer);
+      $('#prod').bind('keypress', testProd);
+    </script>
+</body>
+
+</html>

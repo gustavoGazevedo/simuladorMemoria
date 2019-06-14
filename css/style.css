@@ -1,0 +1,126 @@
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+.tableDiv {
+    padding-top: 1.5rem;
+    margin-bottom: 2rem;
+    overflow: auto;
+}
+
+thead {
+    background-color: rgb(182, 182, 182) !important;
+}
+
+.tableRow {
+    background-color: rgb(182, 182, 182);
+}
+ 
+
+::-webkit-scrollbar-thumb {
+    border-radius: .25rem;
+    -webkit-box-shadow: inset 0 0 6px darkgrey; 
+}
+
+body {
+    background-color: rgb(223, 223, 223);
+}
+
+.header {
+    background-color: rgb(0, 0, 0);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.header>h2,
+h3 {
+    color: rgba(255, 255, 255, 0.493);
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.container {
+    align-content: center;
+    text-align: center;
+    font-size: 0.5rem;
+}
+
+hr {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    width: 85%;
+    align-self: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.431);
+}
+
+.gramar {
+    font-size: 1rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+#gramVizual {
+    margin-top: 1.5rem;
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.712);
+    text-align: left;
+    background-color: #fff !important;
+    background-clip: padding-box;
+    border: 1px solid #ced4da !important;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    padding: .375rem .75rem;
+}
+
+.form-control {
+    width: 80% !important;
+    display: -webkit-inline-box;
+    align-self: flex-end;
+    resize: none;
+    margin: 2px;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fff;
+    opacity: 1;
+}
+
+.form-control:disabled {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+var {
+    font-style: normal;
+}
+
+button {
+    width: 100% !important;
+    display: block !important;
+    color: white !important;
+    border: 1px solid #ced4da !important; 
+    background-color: rgb(141, 141, 141) !important;
+}
+
+button:hover {
+    background-color: rgba(141, 141, 141, 0.664) !important;
+}
+
+#typeGram {
+    font-size: 1rem;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2;
+    color: #212529;
+}
+
+.resultGramaticas {
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+#gram1 {
+    margin-bottom: 0;
+}
