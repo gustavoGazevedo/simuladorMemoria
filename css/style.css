@@ -53,26 +53,12 @@ hr {
     border-top: 1px solid rgba(0, 0, 0, 0.431);
 }
 
-.gramar {
+.controls {
     font-size: 1rem;
     text-align: left;
     font-weight: bold;
 }
 
-#gramVizual {
-    margin-top: 1.5rem;
-    display: block;
-    font-size: 1rem;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.712);
-    text-align: left;
-    background-color: #fff !important;
-    background-clip: padding-box;
-    border: 1px solid #ced4da !important;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    padding: .375rem .75rem;
-}
 
 .form-control {
     width: 80% !important;
@@ -106,21 +92,4 @@ button {
 
 button:hover {
     background-color: rgba(141, 141, 141, 0.664) !important;
-}
-
-#typeGram {
-    font-size: 1rem;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 2;
-    color: #212529;
-}
-
-.resultGramaticas {
-    overflow: scroll;
-    white-space: nowrap;
-}
-
-#gram1 {
-    margin-bottom: 0;
 }

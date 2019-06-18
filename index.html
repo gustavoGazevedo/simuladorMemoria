@@ -18,10 +18,10 @@
   </div>
   <div class="container">
     <div class="row">
-      <div class="gramar col-6">
+      <div class="controls col-6">
         <div class="form-group">
-          <label for="exampleFormControlFile1">Input de Arquivo</label>
-          <input type="file" class="form-control-file" id="exampleFormControlFile1">
+          <label for="arquivo">Input de Arquivo</label>
+          <input type="file" class="form-control-file" id="arquivo">
         </div>
         <!-- first-fit, best-fit e worst-fit -->
         <div>
@@ -46,25 +46,7 @@
         </div>
       </div>
       <div class="col-6">
-        <p class id="gramVizual">
-          <a data-toggle="tooltip" data-placement="top" title="Gramática">G</a>
-          = ({<var data-toggle="tooltip" data-placement="top" title="Não-terminais" id="n1">N</var>}, {<var
-            data-toggle="tooltip" data-placement="top" title="Terminais" id="t1">T</var>},
-          <a data-toggle="tooltip" data-placement="top" title="Produção">P</a>,
-          <var data-toggle="tooltip" data-placement="top" title="Símbolo inicial" id="s1">S</var>) <br />
-          <a data-toggle="tooltip" data-placement="left" title="Produção">P = { <br />
-            <var id="p1"></var><br />
-            }
-          </a>
-        </p>
-        <div class="row">
-          <div onclick="runProgram()" class="col-3">
-            <button type="button" class="btn btn-default">Acionar</button>
-          </div>
-          <div class="col-9">
-            <span id="typeGram" class="col-3">Tipo de Gramática</span>
-          </div>
-        </div>
+        
       </div>
     </div>
     <hr />
@@ -82,39 +64,6 @@
       $(function () {
         $('[data-toggle="tooltip"]').tooltip();
       });
-
-      function testTer(event) {
-        let value = String.fromCharCode(event.which);
-        let pattern = new RegExp(/[a-z]/i);
-        return pattern.test(value);
-      }
-
-      function testSI() {
-        let prod = $('#prod').val();
-        prod = prod.replace(/ /g, '');
-        let linhas = prod.split('\n');
-        let esquerda = ``;
-        for (const key of linhas) {
-          let aux = key.split('>');
-          esquerda = esquerda + `<a class="dropdown-item" onclick="setSI(this.innerHTML)" href="#">${aux[0]}</a>`
-        }
-        $('.dropdown-menu').html(esquerda);
-      }
-
-      function testProd(event) {
-        let value = String.fromCharCode(event.which);
-        let aux = $('#nter').val() + $('#ter').val();
-        if (aux.includes(value) || !/[a-z]/gi.test(value)) {
-          return value;
-        } else {
-          alert('Não está dentro dos não-terminais ou dos terminais');
-          event.preventDefault();
-        }
-      }
-      $('#nter').bind('keypress', testTer);
-      $('#ter').bind('keypress', testTer);
-      $('#si').bind('keypress', testTer);
-      $('#prod').bind('keypress', testProd);
     </script>
 </body>
 
