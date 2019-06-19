@@ -16,6 +16,9 @@ thead {
     background-color: rgb(182, 182, 182);
 }
  
+.inpNumero {
+    margin-bottom: 1rem !important;
+}
 
 ::-webkit-scrollbar-thumb {
     border-radius: .25rem;
@@ -83,6 +86,7 @@ var {
 }
 
 button {
+    margin-top: 0.5rem;
     width: 100% !important;
     display: block !important;
     color: white !important;
