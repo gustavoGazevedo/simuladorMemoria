@@ -29,8 +29,9 @@
       <div class="controls col-6">
         <div class="form-group">
           <label for="arquivo">Input de Arquivo</label>
-          <input type="file" class="form-control-file" id="arquivo">
+          <input type="file" onchange="readFile()" class="form-control-file" id="arquivo">
         </div>
+        <hr class="subHr">
         <input type="number" class="form-control inpNumero" min="0" id="tamanhoMemoria"
           placeholder="Tamanho da Memória">
         <!-- first-fit, best-fit e worst-fit -->
@@ -54,21 +55,46 @@
             </label>
           </div>
         </div>
-        <div onclick="main()">
-          <button type="button" class="btn col-3 btn-default">Acionar</button>
-        </div>
+        <button type="button" onclick="createTable()" id="btnCreateTable" class="btn col-3 btn-default">Criar
+          Tabela</button>
+        <hr class="subHr">
+        Novo Processo
+        <input type="text" class="form-control inpNumero" min="0" id="idProcess" placeholder="ID">
+        <input type="number" class="form-control inpNumero" min="0" id="sizeProcess" placeholder="Tamanho (em bytes)">
+        <input type="number" class="form-control inpNumero" min="0" id="timeProcess"
+          placeholder="Instante de Início do Processo">
+        <input type="number" class="form-control inpNumero" min="0" id="durationProcess"
+          placeholder="Duração do Processo">
+        <button type="button" onclick="addProcess()" class="btn col-3 btn-default">Adicionar</button>
       </div>
       <div class="col-6">
-
+        <div class="controls row">
+          <div class="col align-content-center">
+            <div class="row justify-content-center">
+              <p>Tempo de processo atual: <var id="timeNow">0</var></p>
+            </div>
+            <div class="row justify-content-center">
+              <button type="button" onclick="oneTime()" class="btn col-1 btn-default">></button>
+              <button type="button" onclick="continuosTime()" class="btn col-1 btn-default">>></button>
+              <button type="button" onclick="pauseTime()" class="btn col-1 btn-default">| |</button>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-8 offset-2">
+            <div class="row" id="tabela">
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <hr />
-    <script>
-      $('#tabela').hide();
-      $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-      });
-    </script>
+      <hr />
+      <script>
+        $('#tabela').hide();
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+      </script>
 </body>
 
 </html>
