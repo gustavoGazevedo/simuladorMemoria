@@ -32,7 +32,7 @@ function createTable() {
   memorySize = $('#tamanhoMemoria').val();
   algorithm = document.querySelector('input[name="algoritmo"]:checked').value;
   for (let index = 0; index < memorySize; index++) {
-    aws = `<div class="col-1 tabela" name="" id="${index}"></div>`;
+    aws = `<div class="col-1 tabela" name="" id="id${index}"></div>`;
     table[index] = {
       processId: '',
       tableHtml: aws
