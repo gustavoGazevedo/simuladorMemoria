@@ -17,6 +17,7 @@
   </script>
   <script type="text/javascript" src="js/script.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/all.min.js"></script>
 </head>
 
 <body>
@@ -34,22 +35,24 @@
         <hr class="subHr">
         <input type="number" class="form-control inpNumero" min="0" id="tamanhoMemoria"
           placeholder="Tamanho da Memória">
+          <input type="number" class="form-control inpNumero" min="0" id="tamanhoCell"
+          placeholder="Tamanho Máximo de uma unidade de Memória">
         <!-- first-fit, best-fit e worst-fit -->
         <div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="algoritmo" id="ff" value="option1" checked>
+            <input class="form-check-input" type="radio" name="algoritmo" id="ff" value="ff" checked>
             <label class="form-check-label" for="ff">
               First-Fit
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="algoritmo" id="bf" value="option2">
+            <input class="form-check-input" type="radio" name="algoritmo" id="bf" value="bf">
             <label class="form-check-label" for="bf">
               Best-Fit
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="algoritmo" id="wf" value="option3">
+            <input class="form-check-input" type="radio" name="algoritmo" id="wf" value="wf">
             <label class="form-check-label" for="wf">
               Worst-Fit
             </label>
@@ -71,12 +74,12 @@
         <div class="controls row">
           <div class="col align-content-center">
             <div class="row justify-content-center">
-              <p>Tempo de processo atual: <var id="timeNow">0</var></p>
+              <p>Tempo de processo atual: <var id="timeNow">-1</var></p>
             </div>
             <div class="row justify-content-center">
-              <button type="button" onclick="oneTime()" class="btn col-1 btn-default">></button>
-              <button type="button" onclick="continuosTime()" class="btn col-1 btn-default">>></button>
-              <button type="button" onclick="pauseTime()" class="btn col-1 btn-default">| |</button>
+              <button type="button" onclick="oneTime()" id="play" class="btn col-1 btn-default" disabled><i class="fas fa-play"></i></button>
+              <button type="button" onclick="continuosTime()" id="forward" class="btn col-1 btn-default" disabled><i class="fas fa-forward"></i></button>
+              <button type="button" onclick="pauseTime()" id="pause" class="btn col-1 btn-default" disabled><i class="fas fa-pause"></i></button>
             </div>
           </div>
         </div>
@@ -91,9 +94,6 @@
       <hr />
       <script>
         $('#tabela').hide();
-        $(function () {
-          $('[data-toggle="tooltip"]').tooltip();
-        });
       </script>
 </body>
 
