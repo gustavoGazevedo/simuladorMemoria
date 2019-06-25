@@ -18,6 +18,7 @@
   <script type="text/javascript" src="js/script.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/all.min.js"></script>
+  <script type="text/javascript" src="js/FileSaver.js"></script>
 </head>
 
 <body>
@@ -35,7 +36,7 @@
         <hr class="subHr">
         <input type="number" class="form-control inpNumero" min="0" id="tamanhoMemoria"
           placeholder="Tamanho da Memória">
-          <input type="number" class="form-control inpNumero" min="0" id="tamanhoCell"
+        <input type="number" class="form-control inpNumero" min="0" id="tamanhoCell"
           placeholder="Tamanho Máximo de uma unidade de Memória">
         <!-- first-fit, best-fit e worst-fit -->
         <div>
@@ -60,6 +61,8 @@
         </div>
         <button type="button" onclick="createTable()" id="btnCreateTable" class="btn col-3 btn-default">Criar
           Tabela</button>
+        <button type="button" onclick="downloadLog()" id="btnCreateLog" hidden class="btn col-3 btn-default">Baixar
+          Log</button>
         <hr class="subHr">
         Novo Processo
         <input type="text" class="form-control inpNumero" min="0" id="idProcess" placeholder="ID">
@@ -77,9 +80,12 @@
               <p>Tempo de processo atual: <var id="timeNow">-1</var></p>
             </div>
             <div class="row justify-content-center">
-              <button type="button" onclick="oneTime()" id="play" class="btn col-1 btn-default" disabled><i class="fas fa-play"></i></button>
-              <button type="button" onclick="continuosTime()" id="forward" class="btn col-1 btn-default" disabled><i class="fas fa-forward"></i></button>
-              <button type="button" onclick="pauseTime()" id="pause" class="btn col-1 btn-default" disabled><i class="fas fa-pause"></i></button>
+              <button type="button" onclick="oneTime()" id="play" class="btn col-1 btn-default" disabled><i
+                  class="fas fa-play"></i></button>
+              <button type="button" onclick="continuosTime()" id="forward" class="btn col-1 btn-default" disabled><i
+                  class="fas fa-forward"></i></button>
+              <button type="button" onclick="pauseTime()" id="pause" class="btn col-1 btn-default" disabled><i
+                  class="fas fa-pause"></i></button>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 let maxMemorySize = 8;
 let myFile = '';
+let lastTime = 0;
 let memorySize = '';
 let algorithm = '';
 let fileData = '';
@@ -10,13 +11,17 @@ let table = {};
 let process = {};
 let time = -1;
 let forwardTime = false;
+let log = {
+  log: '',
+  noMemory: 0
+}
 
 async function readFile() {
   myFile = $('#arquivo').prop('files')[0];
   let reader = new FileReader();
   reader.onload = function() {
     fileData = reader.result;
-    let aux = fileData.split('\n');
+    let aux = fileData.split('\r\n');
     for (let index = 0; index < aux.length; index += 4) {
       process[aux[index]] = {
         id: aux[index],
@@ -32,10 +37,13 @@ async function readFile() {
 function createTable() {
   $('#forward').attr('disabled', false);
   $('#play').attr('disabled', false);
+  $('#btnCreateLog').attr('hidden', false);
+  $('#btnCreateTable').attr('hidden', true);
   tablePage = $('#tabela');
   memorySize = $('#tamanhoMemoria').val();
   maxMemorySize = $('#tamanhoCell').val();
   algorithm = document.querySelector('input[name="algoritmo"]:checked').value;
+  let textLogTable = '';
   for (let index = 0; index < memorySize; index++) {
     let aux = getRandomInt(5, maxMemorySize);
     let aws = `<div data-toggle="tooltip" data-placement="top" title="Tamanho:${aux}" class="col-1 tabela" name="" id="id${index}"></div>`;
@@ -44,8 +52,24 @@ function createTable() {
       processId: '',
       size: aux
     };
+    textLogTable += 
+    `Id: id${index}
+    Tamanho: ${aux}
+    `
     tablePage.append(aws);
   }
+  log.log += 
+    `Log:
+    Tamanho da Memoria: ${memorySize} unidades
+    Tamanho das Memorias: de 5 bytes a ${maxMemorySize} bytes
+    Algoritmo: ${algorithm
+      .replace(/ff/g, 'Fist-Fit')
+      .replace(/bf/g, 'Best-Fit')
+      .replace(/wf/g, 'Worse-Fit')}
+    Memoria:
+
+    ${textLogTable}
+    ==================================\n\n`;
   $('[data-toggle="tooltip"]').tooltip();
   tablePage.attr('style', '');
   document.getElementById('ff').disabled = true;
@@ -140,6 +164,7 @@ function fitAlg(element) {
 }
 
 function eraseElem(element) {
+  lastTime = time;
   for (const cell in table) {
     let cells = table[cell];
     if (cells.processId == element.id) {
@@ -147,6 +172,8 @@ function eraseElem(element) {
       $(`#${cells.tableId}`).attr('data-original-title', aws);
       $(`#${cells.tableId}`).css('background-color', 'white');
       cells.processId = '';
+      log.log = 
+      `${log.log}\nCiclo de tempo = ${time}:\nProcesso ${element.id} saiu da posição ${cells.tableId} da memoria (tamanho: ${cells.size} bytes)\ne permaneceu lá do ciclo ${time - element.duration} até o ciclo ${time}.\n\n`;
     }
   }
 }
@@ -170,6 +197,11 @@ function firstFit(element) {
       bytes = updateCell(aux, cells, element, color, bytes);
     }
   }
+  if (bytes > 0) {
+    log.noMemory++;
+    log.log = 
+      `${log.log}\nCiclo de tempo = ${time}:\nProcesso ${element.id} não encontrou espaço na memoria para ${bytes} bytes de ${element.size} bytes.\n\n`;
+  }
 }
 
 function worstFit(element) {
@@ -180,7 +212,6 @@ function worstFit(element) {
   sortable.sort(function(b, a) {
     return a[1] - b[1];
   });
-  console.log(sortable);
   let bytes = element.size;
   let color =
     '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6);
@@ -199,6 +230,11 @@ function worstFit(element) {
       bytes = updateCell(aux, cells, element, color, bytes);
     }
   }
+  if (bytes > 0) {
+    log.noMemory++;
+    log.log = 
+      `${log.log}\nCiclo de tempo = ${time}:\nProcesso ${element.id} não encontrou espaço na memoria para ${bytes} bytes de ${element.size} bytes.\n\n`;
+  }
 }
 
 function bestFit(element) {
@@ -212,7 +248,8 @@ function bestFit(element) {
   let bytes = element.size;
   let color =
     '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6);
-  while (bytes > 0) {
+  let a = 0;
+  while (bytes > 0 && a <= sortable.length) {
     if (bytes <= maxMemorySize) {
       for (const cells2 of sortable) {
         let cell = table[cells2[0]];
@@ -237,6 +274,12 @@ function bestFit(element) {
       let aux = largest.size;
       bytes = updateCell(aux, largest, element, color, bytes);
     }
+    a++;
+  }
+  if (bytes > 0) {
+    log.noMemory++;
+    log.log = 
+      `${log.log}\nCiclo de tempo = ${time}:\nProcesso ${element.id} não encontrou espaço na memoria para ${bytes} bytes de ${element.size} bytes.\n\n`;
   }
 }
 
@@ -247,5 +290,14 @@ function updateCell(aux, cells, element, color, bytes) {
   $(`#${cells.tableId}`).attr('data-original-title', aws);
   $(`#${cells.tableId}`).css('background-color', color);
   cells.processId = element.id;
+  log.log = 
+    `${log.log}\nCiclo de tempo = ${time}:\nProcesso ${element.id} entrou na posição ${cells.tableId} da memoria (tamanho: ${cells.size} bytes)\nocupando ${aux} bytes e permanecerá lá por ${element.duration} ciclos de tempo.\n\n`;
   return bytes - cells.size;
+}
+
+function downloadLog() {
+  log.log =
+  `${log.log}================================\n** Tempo necessário para executar todos os processos: ${lastTime} u.t.\n** Tempo final: ${time} u.t.\n** Número de vezes em que não foi encontrado espaço livre: ${log.noMemory} vezes`;
+  var blob = new Blob([log.log], {type: "text/plain;charset=utf-8"});
+  saveAs(blob, `Log-${new Date().getTime()}.txt`);
 }
