@@ -30,8 +30,8 @@ async function readFile() {
 }
 
 function createTable() {
-  $('#forward').attr("disabled", false);
-  $('#play').attr("disabled", false);
+  $('#forward').attr('disabled', false);
+  $('#play').attr('disabled', false);
   tablePage = $('#tabela');
   memorySize = $('#tamanhoMemoria').val();
   maxMemorySize = $('#tamanhoCell').val();
@@ -103,8 +103,8 @@ function timeCounter() {
 
 function pauseTime() {
   forwardTime = false;
-  $('#forward').attr("disabled", false);
-  $('#pause').attr("disabled", true);
+  $('#forward').attr('disabled', false);
+  $('#pause').attr('disabled', true);
 }
 
 function sleep(ms) {
@@ -113,7 +113,7 @@ function sleep(ms) {
   });
 }
 
-$(function () {
+$(function() {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
@@ -212,33 +212,32 @@ function bestFit(element) {
   let bytes = element.size;
   let color =
     '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6);
-  sortable.forEach(cells => {
-    if (bytes <= 0) {
-      break;
-    }
-    if (cells.processId == '') {
-      if (bytes <= maxMemorySize) {
-        sortable.forEach(cells2 => {
-          if (cells2.processId == '') {
-            if (cells2.size - bytes < 0) {
-              let aux = bytes;
-              bytes = updateCell(aux,cells2, element, color, bytes);
-              break;
-            }
+  while (bytes > 0) {
+    if (bytes <= maxMemorySize) {
+      for (const cells2 of sortable) {
+        let cell = table[cells2[0]];
+        if (cell.processId == '') {
+          if (cell.size - bytes >= 0) {
+            let aux = bytes;
+            bytes = updateCell(aux, cell, element, color, bytes);
+            break;
           }
-        });
-      } else {
-        let largest = {size: 0};
-        sortable.forEach(cells2 => {
-          if (cells2.size > largest.size) {
-            largest = cells2;
+        }
+      }
+    } else {
+      let largest = { size: 0 };
+      for (const cells2 of sortable) {
+        let cell = table[cells2[0]];
+        if (cell.processId == '') {
+          if (cell.size > largest.size) {
+            largest = cell;
           }
-        });
-      let aux = cells.size;
-      bytes = updateCell(aux, cells, element, color, bytes);
+        }
+      }
+      let aux = largest.size;
+      bytes = updateCell(aux, largest, element, color, bytes);
     }
   }
-  });
 }
 
 function updateCell(aux, cells, element, color, bytes) {
@@ -248,5 +247,5 @@ function updateCell(aux, cells, element, color, bytes) {
   $(`#${cells.tableId}`).attr('data-original-title', aws);
   $(`#${cells.tableId}`).css('background-color', color);
   cells.processId = element.id;
-  return (bytes - cells.size);
+  return bytes - cells.size;
 }
