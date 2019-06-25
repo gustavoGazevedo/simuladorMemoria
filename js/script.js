@@ -16,6 +16,7 @@ let log = {
   noMemory: 0
 };
 
+//função para abrir e ler os procesos de um arquivo txt
 async function readFile() {
   myFile = $('#arquivo').prop('files')[0];
   let reader = new FileReader();
@@ -34,6 +35,8 @@ async function readFile() {
   reader.readAsText(myFile);
 }
 
+//função que é lançada quando se clica no botão "criar memoria", e cria a tabela da memoria
+//pega o numero de lacunas, o algoritmo e o tamanho máximo de bits das lacunas
 function createTable() {
   $('#forward').attr('disabled', false);
   $('#play').attr('disabled', false);
@@ -79,6 +82,7 @@ function createTable() {
   document.getElementById('btnCreateTable').disabled = true;
 }
 
+//função para adicionar manualmente processos
 function addProcess() {
   let id = $('#idProcess').val(),
     size = $('#sizeProcess').val(),
@@ -97,10 +101,12 @@ function addProcess() {
   $('#durationProcess').val('');
 }
 
+//quando se clica para passar uma unidade de tempo manualmente
 function oneTime() {
   timeCounter();
 }
 
+//função para rodar automaticamente o tempo
 async function continuosTime() {
   $('#forward').attr('disabled', true);
   $('#pause').attr('disabled', false);
@@ -111,6 +117,7 @@ async function continuosTime() {
   }
 }
 
+//função que é chamada para testar se existem processos que precisam entrar/sair da memoria
 function timeCounter() {
   time += 1;
   for (const element in process) {
@@ -125,6 +132,7 @@ function timeCounter() {
   $('#timeNow').html(time);
 }
 
+//função para parar o rolar automático
 function pauseTime() {
   forwardTime = false;
   $('#forward').attr('disabled', false);
@@ -147,6 +155,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+//função que chama o algoritmo escolhido
 function fitAlg(element) {
   switch (algorithm) {
     case 'ff':
@@ -163,6 +172,7 @@ function fitAlg(element) {
   }
 }
 
+//função para tirar da memoria
 function eraseElem(element) {
   lastTime = time;
   for (const cell in table) {
@@ -179,6 +189,7 @@ function eraseElem(element) {
 }
 
 function firstFit(element) {
+  //pega o tamanho do processo e uma cor para a tabela, pega o primeiro espaço livre que caiba o processo
   let bytes = element.size;
   let color =
     '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6);
@@ -205,6 +216,7 @@ function firstFit(element) {
 }
 
 function worstFit(element) {
+  //pega o tamanho do processo e uma cor para a tabela, pega o maior espaço livre
   let sortable = [];
   for (let cell in table) {
     sortable.push([table[cell].tableId, table[cell].size]);
@@ -238,6 +250,7 @@ function worstFit(element) {
 }
 
 function bestFit(element) {
+  //pega o tamanho do processo e uma cor para a tabela, pega o melhor espaço livre
   let sortable = [];
   for (let cell in table) {
     sortable.push([table[cell].tableId, table[cell].size]);
@@ -283,6 +296,7 @@ function bestFit(element) {
   }
 }
 
+//função que escreve na frontend o processo
 function updateCell(aux, cells, element, color, bytes) {
   let aws = `Tamanho: ${cells.size}, Processo: {Id: ${
     element.id
@@ -295,6 +309,7 @@ function updateCell(aux, cells, element, color, bytes) {
   return bytes - cells.size;
 }
 
+//função para baixar o log
 function downloadLog() {
   log.log =
   `${log.log}================================\n** Tempo necessário para executar todos os processos: ${lastTime} u.t.\n** Tempo final: ${time} u.t.\n** Número de vezes em que não foi encontrado espaço livre: ${log.noMemory} vezes`;
