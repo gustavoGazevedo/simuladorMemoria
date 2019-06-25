@@ -14,7 +14,7 @@ let forwardTime = false;
 let log = {
   log: '',
   noMemory: 0
-}
+};
 
 async function readFile() {
   myFile = $('#arquivo').prop('files')[0];
